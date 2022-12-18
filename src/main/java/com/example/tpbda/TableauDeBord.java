@@ -14,6 +14,9 @@ import java.util.ResourceBundle;
 
 
 public class TableauDeBord implements Initializable {
+    public static final String url="jdbc:mysql://localhost/world?serverTimezone=UTC";
+    public static final String user="root";
+    public static final String password="younesSql";
     String sql1, sql2, sql3, sql4, sql5, sql6, sql7, sql8, sql9;
    @FXML
     Label Q;
@@ -48,9 +51,9 @@ public class TableauDeBord implements Initializable {
                 int number;
                 sql1="SELECT count(Name) as Number FROM country;";
                 Connection c = DriverManager.getConnection(
-                        jdbc.url,
-                        jdbc.user,
-                        jdbc.password
+                        url,
+                        user,
+                        password
                 );
                 Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
                 ResultSet r=s.executeQuery(sql1);
@@ -77,9 +80,9 @@ public class TableauDeBord implements Initializable {
         {
         sql2="SELECT country.NAME,city.Name,countrylanguage.Language FROM world.country,world.city,world.countrylanguage WHERE city.ID= country.Capital and country.Code= countrylanguage.CountryCode ";
         Connection c = DriverManager.getConnection(
-                jdbc.url,
-                jdbc.user,
-                jdbc.password
+                url,
+                user,
+                password
         );
         Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
         ResultSet r=s.executeQuery(sql2);
@@ -115,9 +118,9 @@ public class TableauDeBord implements Initializable {
         {
             sql3="SELECT Name FROM world.city WHERE CountryCode=\"DZA\"";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql3);
@@ -150,9 +153,9 @@ public class TableauDeBord implements Initializable {
         {
             sql4="SELECT Name FROM world.city WHERE Population IN (SELECT MIN(Population) FROM world.city WHERE CountryCode=\"DZA\")";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql4);
@@ -160,7 +163,7 @@ public class TableauDeBord implements Initializable {
             String NAME="---";
             String Name="";
             String Lang="---";
-            //System.out.println("Name"+Name);
+
             ObservableList<Query> sqlR4 = FXCollections.observableArrayList();
             for(r.first();!r.isAfterLast();r.next()){
                 Name=r.getString("Name");
@@ -181,14 +184,13 @@ public class TableauDeBord implements Initializable {
         pays.setText("---");
         wilaya.setText("---");
         language.setText("Langue");
-        sql5="select  Language from world.countrylanguage GROUP BY Language  order by  count(*) desc limit 1";
         try
         {
             sql5="select  Language from world.countrylanguage GROUP BY Language  order by  count(*) desc limit 1";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql5);
@@ -222,9 +224,9 @@ public class TableauDeBord implements Initializable {
         {
             sql6="SELECT Name FROM world.country WHERE LifeExpectancy < 50";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql6);
@@ -258,9 +260,9 @@ public class TableauDeBord implements Initializable {
         {
             sql7="SELECT Name FROM world.country WHERE Continent = (select  Continent from world.country GROUP BY Continent  order by  count(*) desc limit 1)";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql7);
@@ -268,7 +270,6 @@ public class TableauDeBord implements Initializable {
             String NAME="---";
             String Name="";
             String Lang="---";
-            //System.out.println("Name"+Name);
             ObservableList<Query> sqlR7 = FXCollections.observableArrayList();
             for(r.first();!r.isAfterLast();r.next()){
                 NAME=r.getString("Name");
@@ -294,9 +295,9 @@ public class TableauDeBord implements Initializable {
         {
             sql8="SELECT Name,Continent,Capital FROM world.country WHERE Capital IS NULL AND Continent=\"Asia\"";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql8);
@@ -336,9 +337,9 @@ public class TableauDeBord implements Initializable {
         {
             sql9="SELECT AVG(Population) FROM world.country WHERE Continent=\"Europe\"";
             Connection c = DriverManager.getConnection(
-                    jdbc.url,
-                    jdbc.user,
-                    jdbc.password
+                    url,
+                    user,
+                    password
             );
             Statement s=c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             ResultSet r=s.executeQuery(sql9);
